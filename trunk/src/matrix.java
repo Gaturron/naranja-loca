@@ -57,7 +57,10 @@ public class matrix {
 	
 	private String tinyNumber(Float a){
 		if (a == Float.POSITIVE_INFINITY) {
-			return "Inf";
+			return " Inf";
+		}
+		if ( a >= 0 && a < 10){
+			return " "+a.toString();
 		}else{
 			return a.toString();
 		}
@@ -150,7 +153,7 @@ public class matrix {
 		return new Float(Float.POSITIVE_INFINITY);
 	}
 
-	public void vjo_assign_e(int jo, Float e){
+	public void vjo_assign_e(int jo, int e){
 		// Vjo <- e
 		assert jo > 0;
 		
@@ -371,47 +374,44 @@ public class matrix {
 
 	//====================================================================================================//
 	
-	private String matrixToFormula(matrix m){
+	public String matrixToFormula(){
         
 		List<String> formula = new ArrayList<String>();
         
+		int index_i = 1;
+		int index_j = 1;
+		
 		for(int i = 1; i <= dim; i = i + 2) {
+			
+			index_i = 1;
 			for(int j = 1; j <= dim; j = j + 2) {
 				
 				int ic = compemento(i);
 				int jc = compemento(j);
 				
-				
-			}
-		}
-		return null;		
-	}  
-	/*
-	def matrixToFormula(matrix):
-	    formula = set([])
-	    
-	    impares = [x for x in range(matrix.cols) if x % 2 == 1]
-	    for i in impares:
-	        for j in impares:
+				if( i != j ){
+					if( ( getItem(j,  i ).equals( getItem(ic, jc)) ) && ( getItem(ic, jc) != Float.POSITIVE_INFINITY)) 
+						formula.add("V"+ String.valueOf(index_i)+" - V"+String.valueOf(index_j)+" <= "+String.valueOf(getItem(j, i) ));
 
-	            ic = complem(i)
-	            jc = complem(j)
-
-	            index_i = impares.index(i) + 1
-	            index_j = impares.index(j) + 1                                   
-
-	            if( i != j):
-	   
-	                if( matrix.getitem(j, i) == matrix.getitem(ic, jc) != float('inf')): formula.add("V"+str(index_i)+" - V"+str(index_j)+" <= "+str(matrix.getitem(j, i) ))
-	                if( matrix.getitem(jc, i) == matrix.getitem(ic, j) != float('inf')): formula.add("V"+str(index_i)+" + V"+str(index_j)+" <= "+str(matrix.getitem(jc, i) ))    
-	                if( matrix.getitem(i, jc) == matrix.getitem(j, ic) != float('inf')): formula.add("- V"+str(index_i)+" - V"+str(index_j)+" <= "+str(matrix.getitem(i, jc) ))
+					if( ( getItem(jc, i ).equals( getItem(ic, j )) ) && ( getItem(ic, j) != Float.POSITIVE_INFINITY)) 
+	                	formula.add("V"+String.valueOf(index_i)+" + V"+String.valueOf(index_j)+" <= "+String.valueOf(getItem(jc, i) ));    
+	                
+	                if( ( getItem(i,  jc).equals( getItem(j, ic )) ) && ( getItem(j, ic) != Float.POSITIVE_INFINITY)) 
+	                	formula.add("- V"+String.valueOf(index_i)+" - V"+String.valueOf(index_j)+" <= "+String.valueOf(getItem(i, jc) ));
 	            
-	            else:
-	                if( matrix.getitem(ic, i) != float('inf')): formula.add("V"+str(index_i)+" <= "+str(matrix.getitem(ic, i) / 2 ))
-	                if( matrix.getitem(i, ic) != float('inf')): formula.add("V"+str(index_i)+" >= "+str(-matrix.getitem(i, ic) / 2 ))
-
-	    return formula    
-	 */	    
+				}else{
+					
+					if( getItem(ic, i) != Float.POSITIVE_INFINITY) formula.add("V"+String.valueOf(index_i)+" <= "+String.valueOf( getItem(ic, i) / 2 ));
+	                if( getItem(i, ic) != Float.POSITIVE_INFINITY) formula.add("V"+String.valueOf(index_i)+" >= "+String.valueOf(-getItem(i, ic) / 2 ));
+	                
+				}
+				
+				index_i++;
+			}
+			index_j++;
+		}
+		return formula.toString();		
+	}     
 	//====================================================================================================//
 	
 	public static void main(String[] args){
@@ -427,5 +427,13 @@ public class matrix {
 		System.out.println(n);
 		
 		System.out.println(m.equals(n));
+		
+		n = new matrix(6);
+		n.vjo_assign_e(1, 4);
+		n.vjo_assign_e(3, 3);
+		System.out.println(n.toString());
+		n.closure();
+		System.out.println(n.toString());
+		System.out.println(n.matrixToFormula());
 	}
 }
