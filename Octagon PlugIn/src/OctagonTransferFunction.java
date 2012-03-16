@@ -10,7 +10,7 @@ public class OctagonTransferFunction extends AbstractingTransferFunction<Octagon
 	public OctagonLatticeElement createEntryValue(MethodDeclaration method) {
 		OctagonLatticeElement def = ops.getDefault();
 
-		def.indexes.clear();
+		//def.indexes.clear();
 		
 		return def;
 	}

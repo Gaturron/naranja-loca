@@ -3,32 +3,42 @@ import edu.cmu.cs.crystal.simple.SimpleLatticeOperations;
 public class OctagonOperations extends SimpleLatticeOperations<OctagonLatticeElement> {
 
 	@Override
-	public boolean atLeastAsPrecise(OctagonLatticeElement left,
-			OctagonLatticeElement right) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean atLeastAsPrecise(OctagonLatticeElement left, OctagonLatticeElement right) {
+		
+		return left.matrix.atLeastAsPrecise(right.matrix);
 	}
 
 	@Override
 	public OctagonLatticeElement bottom() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OctagonLatticeElement e = new OctagonLatticeElement();
+		e.matrix = matrix.bottom(4);
+		return e;
 	}
 
 	@Override
 	public OctagonLatticeElement copy(OctagonLatticeElement original) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		OctagonLatticeElement e = new OctagonLatticeElement();
+		//e.matrix.copy(original.matrix);
+		
+		return e;
 	}
 
 	@Override
-	public OctagonLatticeElement join(OctagonLatticeElement left,
-			OctagonLatticeElement right) {
-		// TODO Auto-generated method stub
-		return null;
+	public OctagonLatticeElement join(OctagonLatticeElement left, OctagonLatticeElement right) {
+		
+		//esto hay que cambiarlo
+		int dim = left.matrix.dim;
+		matrix m = new matrix(dim);
+		m.union(left.matrix, right.matrix);
+		OctagonLatticeElement e = new OctagonLatticeElement();
+		e.matrix = m;
+		return e;
 	}
 	
 	public OctagonLatticeElement getDefault() {
+		
 		return bottom();		
 	}
 }

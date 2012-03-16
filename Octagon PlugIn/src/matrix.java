@@ -19,6 +19,19 @@ public class matrix {
 		}
 	}
 	
+	public static matrix bottom(int dim){
+		matrix m = new matrix(dim);
+		m.dim = dim;
+		m.matrix = new Float[dim][dim];
+		
+		for(int i = 1; i <= dim; i++) {
+			for(int j = 1; j <= dim; j++) {
+				m.setItem(i, j, new Float(0));
+			}
+		}
+		return m;
+	}	
+	
 	public void setItem(int rows, int cols, Float item){
 		assert dim > rows && dim > cols;
 		matrix[rows - 1][cols - 1] = item;
@@ -78,6 +91,20 @@ public class matrix {
 			}
 		}
 		return res;	
+	}
+	
+	public boolean atLeastAsPrecise(matrix m) {
+		assert dim == m.dim;
+	
+		boolean res = true;
+		for(int i = 1; i <= dim; i++) {
+			for(int j = 1; j <= dim; j++) {
+				if(getItem(i, j) > m.getItem(i, j)){
+					res = false;
+				}
+			}
+		}
+		return res;
 	}
 	
 	//====================================================================================================//
@@ -324,7 +351,7 @@ public class matrix {
 		copy(res);
 	}
 	
-	private matrix union(matrix m, matrix n) {
+	public matrix union(matrix m, matrix n) {
 		return pico_abajo(m, n);
 	}
 
