@@ -19,11 +19,10 @@ public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 	
 	@Override
 	public void analyzeMethod(MethodDeclaration d) {
-		//String methodName = d.getName().getIdentifier();
-		//getReporter().debugOut().println(methodName);
-		//d.accept(new OctagonVisitor());
+		String methodName = d.getName().getIdentifier();
+		getReporter().debugOut().println(methodName);
 		
-		System.out.println("Analyze Method Starts");
+		System.out.println("Analyze Method Starts "+methodName);
 		
 		OctagonTransferFunction tf = new OctagonTransferFunction();
 		flowAnalysis = new TACFlowAnalysis<OctagonLatticeElement>(tf, getInput());
@@ -41,10 +40,13 @@ public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 		
 		@Override
 		public void endVisit(VariableDeclarationStatement node) {
-			System.out.println("Asignacion");
+			//System.out.println("Asignacion "+node.toString());
 			
-			OctagonLatticeElement e = flowAnalysis.getResultsBefore(node);
-			System.out.println("m: "+e.toString());
+			OctagonLatticeElement e = flowAnalysis.getResultsBeforeAST(node);
+			//System.out.println("m: "+e.toString());
+			//if(e.matrix != null) System.out.println(e.matrix.toString());
+			
+			//e.matrix = new matrix(4);
 		}
 		
 		@Override
