@@ -1,5 +1,4 @@
 import org.eclipse.jdt.core.dom.ASTVisitor;
-import org.eclipse.jdt.core.dom.AnnotationTypeDeclaration;
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.ConditionalExpression;
@@ -11,11 +10,11 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationStatement;
 import org.eclipse.jdt.core.dom.WhileStatement;
 import edu.cmu.cs.crystal.AbstractCrystalMethodAnalysis;
-import edu.cmu.cs.crystal.tac.TACFlowAnalysis;
+import edu.cmu.cs.crystal.simple.SimpleTACFlowAnalysis;
 
 public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 
-	TACFlowAnalysis<OctagonLatticeElement> flowAnalysis;
+	SimpleTACFlowAnalysis<OctagonLatticeElement> flowAnalysis;
 	
 	@Override
 	public void analyzeMethod(MethodDeclaration d) {
@@ -25,7 +24,7 @@ public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 		System.out.println("Analyze Method Starts "+methodName);
 		
 		OctagonTransferFunction tf = new OctagonTransferFunction();
-		flowAnalysis = new TACFlowAnalysis<OctagonLatticeElement>(tf, getInput());
+		flowAnalysis = new SimpleTACFlowAnalysis<OctagonLatticeElement>(tf, getInput());
 		d.accept(new OctagonVisitor());
 	}
 
@@ -40,13 +39,10 @@ public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 		
 		@Override
 		public void endVisit(VariableDeclarationStatement node) {
-			//System.out.println("Asignacion "+node.toString());
+			System.out.println("Asignacion "+node.toString());
 			
-			OctagonLatticeElement e = flowAnalysis.getResultsBeforeAST(node);
-			//System.out.println("m: "+e.toString());
-			//if(e.matrix != null) System.out.println(e.matrix.toString());
-			
-			//e.matrix = new matrix(4);
+			OctagonLatticeElement OctBefore = flowAnalysis.getResultsAfterAST(node);
+			System.out.println("OctBefore: "+OctBefore.number);
 		}
 		
 		@Override

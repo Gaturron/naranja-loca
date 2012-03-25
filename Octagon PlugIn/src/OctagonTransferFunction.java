@@ -2,25 +2,19 @@ import org.eclipse.jdt.core.dom.MethodDeclaration;
 import edu.cmu.cs.crystal.flow.ILatticeOperations;
 import edu.cmu.cs.crystal.simple.AbstractingTransferFunction;
 import edu.cmu.cs.crystal.tac.model.AssignmentInstruction;
+import edu.cmu.cs.crystal.tac.model.CopyInstruction;
+import edu.cmu.cs.crystal.tac.model.LoadLiteralInstruction;
+import edu.cmu.cs.crystal.tac.model.NewObjectInstruction;
+import edu.cmu.cs.crystal.tac.model.SourceVariableDeclaration;
 
 public class OctagonTransferFunction extends AbstractingTransferFunction<OctagonLatticeElement>{
 
 	private OctagonOperations ops = new OctagonOperations();
 	
-	matrix temp = new matrix(4);
-	
 	public OctagonLatticeElement createEntryValue(MethodDeclaration method) {
 		OctagonLatticeElement def = new OctagonLatticeElement();
-		def.matrix = new matrix(4);
-		System.out.println("Hola1: "+method.toString());
-		System.out.println(def.matrix.toString());
-
-		//def.indexes.clear();
 		
-
-		System.out.println(temp.toString());
-		temp.vjo_assign_e(1, 2);
-		
+		System.out.println("	Hola: "+method.getName().getIdentifier());
 		
 		return def;
 	}
@@ -28,20 +22,17 @@ public class OctagonTransferFunction extends AbstractingTransferFunction<Octagon
 	@Override
 	public ILatticeOperations<OctagonLatticeElement> getLatticeOperations() {
 
-
-		System.out.println("Hola2 "+temp.toString());
-		temp.vjo_assign_e(1, 3);
+		System.out.println("	Hola2 ");
 		
 		return ops;
 	}
 	
 	@Override
-	public OctagonLatticeElement transfer(AssignmentInstruction instr, OctagonLatticeElement value) {
-		System.out.println("Hola3 "+instr.toString());
+	public OctagonLatticeElement transfer(LoadLiteralInstruction instr, OctagonLatticeElement value) {
 		
-		System.out.println(temp.toString());
-		temp.vjo_assign_e(1, 4);
-		
+		System.out.println("	Hola3 "+value.number);
+		value.number++;
 		return value;
 	}
+	//ACA se puede agregar todas las funciones de transfer
 }
