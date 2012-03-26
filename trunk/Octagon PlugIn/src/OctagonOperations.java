@@ -5,16 +5,14 @@ public class OctagonOperations extends SimpleLatticeOperations<OctagonLatticeEle
 	@Override
 	public boolean atLeastAsPrecise(OctagonLatticeElement left, OctagonLatticeElement right) {
 		
-		//return left.matrix.atLeastAsPrecise(right.matrix);
-		return left.number <= right.number;
+		return left.matrix.atLeastAsPrecise(right.matrix);
 	}
 
 	@Override
 	public OctagonLatticeElement bottom() {
 		
 		OctagonLatticeElement e = new OctagonLatticeElement();
-		//e.matrix = matrix.bottom(4);
-		e.number = 0;
+		e.matrix = matrix.bottom(2);
 		return e;
 	}
 
@@ -22,25 +20,17 @@ public class OctagonOperations extends SimpleLatticeOperations<OctagonLatticeEle
 	public OctagonLatticeElement copy(OctagonLatticeElement original) {
 		
 		OctagonLatticeElement e = new OctagonLatticeElement();
-		//e.matrix.copy(original.matrix);
-		
-		e.number = original.number;		
+		e.matrix.copy(original.matrix);
 		return e;
 	}
 
 	@Override
 	public OctagonLatticeElement join(OctagonLatticeElement left, OctagonLatticeElement right) {
-		
-		//esto hay que cambiarlo
-		/*int dim = left.matrix.dim;
+		int dim = left.matrix.dim;
 		matrix m = new matrix(dim);
 		m.union(left.matrix, right.matrix);
 		OctagonLatticeElement e = new OctagonLatticeElement();
 		e.matrix = m;
-		return e;*/
-		OctagonLatticeElement e = new OctagonLatticeElement();
-		e.number = left.number + right.number;
-		
 		return e;
 	}
 	

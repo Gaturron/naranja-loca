@@ -39,10 +39,11 @@ public class OctagonAnalysis extends AbstractCrystalMethodAnalysis{
 		
 		@Override
 		public void endVisit(VariableDeclarationStatement node) {
-			System.out.println("Asignacion "+node.toString());
+			System.out.print("Asignacion "+node.toString());
 			
 			OctagonLatticeElement OctBefore = flowAnalysis.getResultsAfterAST(node);
-			System.out.println("OctBefore: "+OctBefore.number);
+			System.out.println("OctBefore: ");
+			System.out.println(OctBefore.matrix.toString());
 		}
 		
 		@Override

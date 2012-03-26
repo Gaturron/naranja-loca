@@ -1,6 +1,4 @@
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 
 public class matrix {
@@ -443,6 +441,34 @@ public class matrix {
 	}     
 	//====================================================================================================//
 	
+	public void addVariable(){
+		
+		int oldDim = dim;
+		Float[][] temp = new Float[dim][dim];
+		
+		for(int i = 1; i <= dim; i++) {
+			for(int j = 1; j <= dim; j++) {
+				temp[i - 1][j - 1] = matrix[i - 1][j - 1]; 
+			}
+		}
+		
+		matrix = new Float[dim + 2][dim + 2];
+		dim = dim + 2; 
+		
+		for(int i = 1; i <= dim; i++) {
+			for(int j = 1; j <= dim; j++) {
+				
+				if(i < oldDim && j < oldDim){
+					matrix[i - 1][j - 1] = temp[i - 1][j - 1]; 
+				}else{
+					matrix[i - 1][j - 1] = new Float(Float.POSITIVE_INFINITY);
+				}
+			}
+		}		
+	}
+	
+	//====================================================================================================//
+	
 	public static void main(String[] args){
 		//ejemplo
 		matrix m = new matrix(4);
@@ -464,5 +490,10 @@ public class matrix {
 		n.closure();
 		System.out.println(n.toString());
 		System.out.println(n.matrixToFormula());
+		
+		matrix b = new matrix(2);
+		System.out.println(b.toString());
+		b.addVariable();
+		System.out.println(b.toString());
 	}
 }
