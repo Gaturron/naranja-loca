@@ -13,25 +13,18 @@ public class OctagonTransferFunction extends AbstractingTransferFunction<Octagon
 	
 	public OctagonLatticeElement createEntryValue(MethodDeclaration method) {
 		OctagonLatticeElement def = new OctagonLatticeElement();
-		
-		System.out.println("	Hola: "+method.getName().getIdentifier());
-		
 		return def;
 	}
 
 	@Override
 	public ILatticeOperations<OctagonLatticeElement> getLatticeOperations() {
 
-		System.out.println("	Hola2 ");
-		
 		return ops;
 	}
 	
 	@Override
 	public OctagonLatticeElement transfer(LoadLiteralInstruction instr, OctagonLatticeElement value) {
-		
-		System.out.println("	Hola3 "+value.number);
-		value.number++;
+		value.matrix.addVariable();
 		return value;
 	}
 	//ACA se puede agregar todas las funciones de transfer
